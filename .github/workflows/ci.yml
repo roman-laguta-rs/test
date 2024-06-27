@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - name: debug
-          run: echo '${{ toJSON(needs.build-test.outputs) }}'
+        run: echo '${{ toJSON(needs.build-test.outputs) }}'
       - uses: actions/download-artifact@master
         with:
           name: ${{ matrix.application }}/dist

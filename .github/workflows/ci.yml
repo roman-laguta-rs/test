@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  build and test:
+  build-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:

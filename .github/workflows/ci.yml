@@ -48,7 +48,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
           matrix:
-            option: ${{ needs.build-test.outputs.* }}
+            application:
+              - cart
+              - admin
+              - landing-page
             env: [staging, production]
     environment:
       name: matrix.env

@@ -37,3 +37,25 @@ jobs:
             ~/.cache/Cypress # needed for the Cypress binary
           key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm nx test ${{ matrix.application }}
+      - run: ls
+      - uses: actions/upload-artifact@master
+        with:
+          name: ${{ matrix.application }}/dist
+          path: ./dist
+      
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+    strategy:
+          matrix:
+            option: ${{ needs.build-test.outputs.* }}
+    steps:
+      - uses: actions/checkout@main
+      - name: debug
+          run: echo '${{ toJSON(needs.build-test.outputs) }}'
+      - uses: actions/download-artifact@master
+        with:
+          name: ${{ matrix.application }}/dist
+          path: ./dist
+      - run: ls
+      - run: echo Deploying to $ENVIRONMENT

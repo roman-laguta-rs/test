@@ -8,6 +8,12 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        application:
+          - cart
+          - admin
+          - landing-page
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,6 +36,4 @@ jobs:
             node_modules
             ~/.cache/Cypress # needed for the Cypress binary
           key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm nx build cart
-      - run: pnpm nx build admin
-      - run: pnpm nx build landing-page
+      - run: pnpm nx test ${{ matrix.application }}

@@ -49,6 +49,9 @@ jobs:
     strategy:
           matrix:
             option: ${{ needs.build-test.outputs.* }}
+            env: [staging, production]
+    environment:
+      name: matrix.env
     steps:
       - uses: actions/checkout@main
       - name: debug
